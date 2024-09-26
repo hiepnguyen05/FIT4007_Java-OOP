@@ -1,0 +1,66 @@
+public class Vehicle {
+    private String tenXe;
+    private double triGiaXe;
+    private int dungTichXylanh;
+
+    // Constructor mặc định
+    public Vehicle() {
+        this.tenXe = "";
+        this.triGiaXe = 0.0;
+        this.dungTichXylanh = 0;
+    }
+
+    // Constructor có tham số
+    public Vehicle(String tenXe, double triGiaXe, int dungTichXylanh) {
+        this.tenXe = tenXe != null && !tenXe.trim().isEmpty() ? tenXe : "TEN_XE_DEFAULT";
+        this.triGiaXe = triGiaXe > 0 ? triGiaXe : 0.0;
+        this.dungTichXylanh = dungTichXylanh > 0 ? dungTichXylanh : 0;
+    }
+
+    // Getters and Setters
+    public String getTenXe() {
+        return tenXe;
+    }
+
+    public void setTenXe(String tenXe) {
+        this.tenXe = tenXe != null && !tenXe.trim().isEmpty() ? tenXe : "TEN_XE_DEFAULT";
+    }
+
+    public double getTriGiaXe() {
+        return triGiaXe;
+    }
+
+    public void setTriGiaXe(double triGiaXe) {
+        this.triGiaXe = triGiaXe > 0 ? triGiaXe : 0.0;
+    }
+
+    public int getDungTichXylanh() {
+        return dungTichXylanh;
+    }
+
+    public void setDungTichXylanh(int dungTichXylanh) {
+        this.dungTichXylanh = dungTichXylanh > 0 ? dungTichXylanh : 0;
+    }
+
+    // Phương thức tính thuế trước bạ
+    public double tinhThueTruocBa() {
+        double tiLeThue;
+        if (dungTichXylanh < 100) {
+            tiLeThue = 0.01;
+        } else if (dungTichXylanh <= 200) {
+            tiLeThue = 0.03;
+        } else {
+            tiLeThue = 0.05;
+        }
+        return triGiaXe * tiLeThue;
+    }
+
+    // Override phương thức toString
+    @Override
+    public String toString() {
+        return "Tên xe: " + tenXe + "\n" +
+                "Trị giá xe: " + triGiaXe + "\n" +
+                "Dung tích xylanh: " + dungTichXylanh + "cc\n" +
+                "Thuế trước bạ: " + tinhThueTruocBa() + "\n";
+    }
+}

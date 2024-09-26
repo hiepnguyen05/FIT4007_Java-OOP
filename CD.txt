@@ -1,0 +1,76 @@
+public class CD {
+    private int maCD;
+    private String tuaCD;
+    private String caSy;
+    private int soBaiHat;
+    private double giaThanh;
+
+    // Constructor mặc định
+    public CD() {
+        this.maCD = 0;
+        this.tuaCD = "";
+        this.caSy = "";
+        this.soBaiHat = 0;
+        this.giaThanh = 0.0;
+    }
+
+    // Constructor có tham số
+    public CD(int maCD, String tuaCD, String caSy, int soBaiHat, double giaThanh) {
+        this.maCD = maCD;
+        this.tuaCD = (tuaCD != null && !tuaCD.trim().isEmpty()) ? tuaCD : "TUA_CD_DEFAULT";
+        this.caSy = (caSy != null && !caSy.trim().isEmpty()) ? caSy : "CA_SY_DEFAULT";
+        this.soBaiHat = soBaiHat > 0 ? soBaiHat : 1;
+        this.giaThanh = giaThanh > 0 ? giaThanh : 1.0;
+    }
+
+    // Getters and Setters
+    public int getMaCD() {
+        return maCD;
+    }
+
+    public void setMaCD(int maCD) {
+        this.maCD = maCD;
+    }
+
+    public String getTuaCD() {
+        return tuaCD;
+    }
+
+    public void setTuaCD(String tuaCD) {
+        this.tuaCD = (tuaCD != null && !tuaCD.trim().isEmpty()) ? tuaCD : "TUA_CD_DEFAULT";
+    }
+
+    public String getCaSy() {
+        return caSy;
+    }
+
+    public void setCaSy(String caSy) {
+        this.caSy = (caSy != null && !caSy.trim().isEmpty()) ? caSy : "CA_SY_DEFAULT";
+    }
+
+    public int getSoBaiHat() {
+        return soBaiHat;
+    }
+
+    public void setSoBaiHat(int soBaiHat) {
+        this.soBaiHat = soBaiHat > 0 ? soBaiHat : 1;
+    }
+
+    public double getGiaThanh() {
+        return giaThanh;
+    }
+
+    public void setGiaThanh(double giaThanh) {
+        this.giaThanh = giaThanh > 0 ? giaThanh : 1.0;
+    }
+
+    // Override phương thức toString
+    @Override
+    public String toString() {
+        return "Mã CD: " + maCD + "\n" +
+                "Tựa CD: " + tuaCD + "\n" +
+                "Ca sỹ: " + caSy + "\n" +
+                "Số bài hát: " + soBaiHat + "\n" +
+                "Giá thành: " + giaThanh;
+    }
+}

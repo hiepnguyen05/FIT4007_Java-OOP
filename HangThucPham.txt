@@ -1,0 +1,87 @@
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class HangThucPham {
+    private static final DecimalFormat df = new DecimalFormat("#,###.##");
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+    private final String maHang;
+    private String tenHang;
+    private double donGia;
+    private Date ngaySanXuat;
+    private Date ngayHetHan;
+
+    // Constructor đầy đủ tham số
+    public HangThucPham(String maHang, String tenHang, double donGia, Date ngaySanXuat, Date ngayHetHan) {
+        this.maHang = maHang != null ? maHang : "MA_HANG_DEFAULT";
+        this.tenHang = (tenHang != null && !tenHang.trim().isEmpty()) ? tenHang : "TEN_HANG_DEFAULT";
+        this.donGia = donGia > 0 ? donGia : 1.0;
+        this.ngaySanXuat = ngaySanXuat != null ? ngaySanXuat : new Date();
+        this.ngayHetHan = ngayHetHan != null && ngayHetHan.after(this.ngaySanXuat) ? ngayHetHan : new Date();
+    }
+
+    // Constructor chỉ với mã hàng
+    public HangThucPham(String maHang) {
+        this(maHang, "TEN_HANG_DEFAULT", 1.0, new Date(), new Date());
+    }
+
+    // Getters and Setters
+    public String getMaHang() {
+        return maHang;
+    }
+
+    public String getTenHang() {
+        return tenHang;
+    }
+
+    public void setTenHang(String tenHang) {
+        this.tenHang = (tenHang != null && !tenHang.trim().isEmpty()) ? tenHang : "TEN_HANG_DEFAULT";
+    }
+
+    public double getDonGia() {
+        return donGia;
+    }
+
+    public void setDonGia(double donGia) {
+        this.donGia = donGia > 0 ? donGia : 1.0;
+    }
+
+    public Date getNgaySanXuat() {
+        return ngaySanXuat;
+    }
+
+    public void setNgaySanXuat(Date ngaySanXuat) {
+        this.ngaySanXuat = (ngaySanXuat != null) ? ngaySanXuat : new Date();
+        if (this.ngayHetHan.before(this.ngaySanXuat)) {
+            this.ngayHetHan = this.ngaySanXuat;
+        }
+    }
+
+    public Date getNgayHetHan() {
+        return ngayHetHan;
+    }
+
+    public void setNgayHetHan(Date ngayHetHan) {
+        if (ngayHetHan != null && ngayHetHan.after(this.ngaySanXuat)) {
+            this.ngayHetHan = ngayHetHan;
+        } else {
+            this.ngayHetHan = this.ngaySanXuat;
+        }
+    }
+
+    // Kiểm tra hàng thực phẩm đã hết hạn chưa
+    public boolean isHetHan() {
+        return new Date().after(this.ngayHetHan);
+    }
+
+    // Phương thức toString
+    @Override
+    public String toString() {
+        return "Mã hàng: " + maHang + "\n" +
+                "Tên hàng: " + tenHang + "\n" +
+                "Đơn giá: " + df.format(donGia) + " VNĐ\n" +
+                "Ngày sản xuất: " + dateFormat.format(ngaySanXuat) + "\n" +
+                "Ngày hết hạn: " + dateFormat.format(ngayHetHan);
+    }
+}

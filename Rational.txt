@@ -1,0 +1,83 @@
+public class Rational {
+    private int numerator;   // Tử số
+    private int denominator; // Mẫu số
+
+    // Constructor
+    public Rational(int numerator, int denominator) {
+        if (denominator == 0) {
+            throw new IllegalArgumentException("Mẫu số không thể là 0");
+        }
+        this.numerator = numerator;
+        this.denominator = denominator;
+        reduce(); // Tối giản phân số ngay khi tạo
+    }
+
+    // Tối giản phân số
+    private void reduce() {
+        int gcd = gcd(numerator, denominator);
+        numerator /= gcd;
+        denominator /= gcd;
+        // Đảm bảo rằng mẫu số luôn dương
+        if (denominator < 0) {
+            numerator = -numerator;
+            denominator = -denominator;
+        }
+    }
+
+    // Tìm UCLN của 2 số (dùng thuật toán Euclid)
+    private int gcd(int a, int b) {
+        if (b == 0) return Math.abs(a);
+        return gcd(b, a % b);
+    }
+
+    // Nghịch đảo phân số
+    public Rational reciprocal() {
+        return new Rational(denominator, numerator);
+    }
+
+    // Cộng 2 phân số
+    public Rational add(Rational other) {
+        int newNumerator = this.numerator * other.denominator + other.numerator * this.denominator;
+        int newDenominator = this.denominator * other.denominator;
+        return new Rational(newNumerator, newDenominator);
+    }
+
+    // Trừ 2 phân số
+    public Rational subtract(Rational other) {
+        int newNumerator = this.numerator * other.denominator - other.numerator * this.denominator;
+        int newDenominator = this.denominator * other.denominator;
+        return new Rational(newNumerator, newDenominator);
+    }
+
+    // Nhân 2 phân số
+    public Rational multiply(Rational other) {
+        int newNumerator = this.numerator * other.numerator;
+        int newDenominator = this.denominator * other.denominator;
+        return new Rational(newNumerator, newDenominator);
+    }
+
+    // Chia 2 phân số
+    public Rational divide(Rational other) {
+        return this.multiply(other.reciprocal());
+    }
+
+    // So sánh 2 phân số với sai số (tolerance)
+    public boolean equals(Rational other, double tolerance) {
+        double diff = Math.abs(this.toDouble() - other.toDouble());
+        return diff < tolerance;
+    }
+
+    // Chuyển phân số thành số thập phân
+    public double toDouble() {
+        return (double) numerator / denominator;
+    }
+
+    // Override phương thức toString để in phân số
+    @Override
+    public String toString() {
+        if (denominator == 1) {
+            return String.valueOf(numerator); // Nếu là phân số nguyên
+        }
+        return numerator + "/" + denominator;
+    }
+}
